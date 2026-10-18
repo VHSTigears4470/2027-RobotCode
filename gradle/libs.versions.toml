@@ -1,0 +1,14 @@
+# Single source of truth for dependency + plugin versions.
+# Used by the root robot project and every module under libs/.
+[versions]
+java = "25"
+gradlerio = "2027.0.0-alpha-7"
+junitJupiter = "5.10.1"
+junitPlatform = "1.10.1"
+
+[libraries]
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junitJupiter" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junitPlatform" }
+
+[plugins]
+gradlerio = { id = "org.wpilib.GradleRIO", version.ref = "gradlerio" }

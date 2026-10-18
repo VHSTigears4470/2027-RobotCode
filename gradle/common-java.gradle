@@ -1,0 +1,20 @@
+// Shared build logic applied by the root robot project and every libs/* module.
+// Version numbers themselves live in gradle/libs.versions.toml (the single source
+// of truth); this file just wires them up identically everywhere so all modules
+// compile against the same toolchain, flags, and test framework.
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(libs.versions.java.get().toInteger())
+    }
+}
+
+// Keep string concat inlining consistent with the original robot project.
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs.add('-XDstringConcat=inline')
+    options.release = libs.versions.java.get().toInteger()
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+    systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
+}
