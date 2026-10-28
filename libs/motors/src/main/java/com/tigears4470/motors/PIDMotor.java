@@ -5,7 +5,7 @@ import org.wpilib.command2.SubsystemBase;
 
 import com.ctre.phoenix6.controls.*;
 import com.revrobotics.spark.SparkLowLevel.ControlType;
-import com.tigears4470.ctre.PIDMotorTalonFX;
+import com.tigears4470.motors.ctre.PIDMotorTalonFX;
 import com.tigears4470.motors.PIDMotorIOInputsAutoLogged;
 
 public class PIDMotor extends SubsystemBase {

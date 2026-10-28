@@ -1,4 +1,4 @@
-package com.tigears4470.ctre;
+package com.tigears4470.motors.ctre;
 
 import org.wpilib.hardware.bus.CANPort;
 

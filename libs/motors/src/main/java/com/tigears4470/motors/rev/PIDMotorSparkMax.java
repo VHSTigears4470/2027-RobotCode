@@ -1,4 +1,4 @@
-package com.tigears4470.rev;
+package com.tigears4470.motors.rev;
 
 import org.wpilib.hardware.bus.CANPort;
 
@@ -8,22 +8,24 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkClosedLoopController;
-import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel;
-import com.revrobotics.spark.config.SparkFlexConfig;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import com.tigears4470.motors.PIDMotorIO;
 import com.tigears4470.motors.PIDMotorIOInputsAutoLogged;
 
-public class PIDSparkFlex implements PIDMotorIO {
-    private SparkFlex motor = null;
+public class PIDMotorSparkMax implements PIDMotorIO {
+    private SparkMax motor = null;
     private RelativeEncoder encoder = null;
     private AbsoluteEncoder encoderAbs = null;
     private SparkClosedLoopController controller = null;
     private double encoderConversionFactor = 1;
     private double velocityConversionFactor = 1;
 
-    public PIDSparkFlex(CANPort busID, int ID, SparkFlexConfig config, double encoderConversionFactor, double velocityConversionFactor) {
-        motor = new SparkFlex(busID, ID, SparkLowLevel.MotorType.kBrushless);
+
+    public PIDMotorSparkMax(CANPort busID, int ID, SparkMaxConfig config, double encoderConversionFactor, double velocityConversionFactor) {
+        motor = new SparkMax(busID, ID, MotorType.kBrushless);
         this.encoderConversionFactor = encoderConversionFactor;
         this.velocityConversionFactor = velocityConversionFactor;
         encoder = motor.getEncoder();
@@ -40,7 +42,7 @@ public class PIDSparkFlex implements PIDMotorIO {
         encoder.setPosition(0);
     }
 
-    @Override public void setSetpoint(double setpoint, SparkLowLevel.ControlType controlType, double FF) {
+   @Override public void setSetpoint(double setpoint, SparkLowLevel.ControlType controlType, double FF) {
         controller.setSetpoint(setpoint / encoderConversionFactor, controlType, ClosedLoopSlot.kSlot0, FF);
     }
 
@@ -56,7 +58,7 @@ public class PIDSparkFlex implements PIDMotorIO {
         motor.setVoltage(voltage);
     }
 
-    @Override public void setEncoder(double position){
+    @Override public void setEncoder(double position) {
         encoder.setPosition(position / encoderConversionFactor);
     }
 
@@ -76,7 +78,7 @@ public class PIDSparkFlex implements PIDMotorIO {
         return encoder.getVelocity().get() * velocityConversionFactor;
     }
 
-    @Override public double getAppliedOutput(){
+     @Override public double getAppliedOutput(){
         return motor.getAppliedOutput().get();
     }
 
