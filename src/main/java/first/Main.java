@@ -20,7 +20,6 @@ public final class Main {
    * <p>If you change your main robot class, change the parameter type.
    */
   public static void main(String... args) {	
-	com.tigears4470.motors.Motors.sayHello();
 	com.tigears4470.sim.Sim.sayHello();
 	com.tigears4470.swerve.Swerve.sayHello();
 
