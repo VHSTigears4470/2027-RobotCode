@@ -60,6 +60,8 @@ dependencies {
     implementation project(":libs:motors")
     implementation project(":libs:sim")
     implementation project(":libs:swerve")
+    implementation project(":libs:vision")
+
 
     annotationProcessor wpi.java.deps.wpilibAnnotations()
     implementation wpi.java.deps.wpilib()

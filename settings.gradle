@@ -40,3 +40,5 @@ props.setProperty("org.gradle.internal.native.headers.unresolved.dependencies.ig
 include ":libs:motors"
 include ":libs:sim"
 include ":libs:swerve"
+include ":libs:vision"
+

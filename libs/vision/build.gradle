@@ -1,0 +1,18 @@
+plugins {
+    id 'java-library'
+    alias(libs.plugins.gradlerio)
+}
+
+apply from: "$rootDir/gradle/common-java.gradle"
+
+dependencies {
+    // WPILib + vendor deps come from the GradleRIO plugin version pinned in
+    // gradle/libs.versions.toml and the shared vendordeps/ folder at the repo
+    // root, so this lib compiles against the exact same stack as the robot
+    // project and every other libs/* module.
+    api wpi.java.deps.wpilib()
+    api wpi.java.vendor.java()
+
+    testImplementation libs.junit.jupiter
+    testRuntimeOnly libs.junit.platform.launcher
+}
