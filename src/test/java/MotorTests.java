@@ -25,14 +25,14 @@ class MotorTests {
 		config.apply(SparkFlexConfig.Presets.REV_Vortex);
 
 		motor = new PIDMotor(new PIDMotorSparkFlex(
-			CANPort.CAN_S0, 1, config, 1, 1
-		));
+			CANPort.CAN_S0, 1, config, 1, 0.23
+		), 0.24);
 
 		callMotor(motor);
 
 		motor = new PIDMotor(new PIDMotorTalonFX(
 			CANPort.CAN_S0, 1, new TalonFXConfiguration()
-		));
+		), 0.24);
 
 		// if it crashes something is fundamentally wrong with the code
 	}
