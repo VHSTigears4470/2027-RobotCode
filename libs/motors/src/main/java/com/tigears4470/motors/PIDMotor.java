@@ -13,9 +13,11 @@ public class PIDMotor extends SubsystemBase {
   private PIDMotorIO io;
   private final PIDMotorIOInputsAutoLogged inputs = new PIDMotorIOInputsAutoLogged();
   private boolean isTalon;
+  private double ff;
    
-  public PIDMotor(PIDMotorIO io) {
+  public PIDMotor(PIDMotorIO io, double FF) {
     this.io = io;
+	this.ff = FF;
     io.resetEncoder();
 	this.isTalon = io instanceof PIDMotorTalonFX;
   }
@@ -23,6 +25,14 @@ public class PIDMotor extends SubsystemBase {
   @Override public void periodic() {
     io.updateInputs(inputs);
   }
+
+  public void setSetpoint(double setpoint, ControlType controlType) {
+		this.setSetpoint(setpoint, controlType, this.ff);
+  }
+
+  public void setSetpoint(double setpoint) {
+		this.setSetpoint(setpoint, ControlType.kDutyCycle);
+	}
 
   public void setSetpoint(double setpoint, ControlType controlType, double FF) {
 	Logger.recordOutput("PIDMotor/Setpoint", setpoint);
