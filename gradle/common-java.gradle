@@ -8,6 +8,25 @@ java {
     }
 }
 
+// GradleRIO only scans <projectDir>/vendordeps, so the shared root vendordeps/
+// folder is invisible to every libs/* module and they would otherwise compile
+// against WPILib alone. Load the root folder into each subproject explicitly
+// (the root project already loaded it during plugin application), then re-run
+// validation so all modules see the exact same vendor stack.
+if (project != rootProject) {
+    wpi.vendor.loadFrom(rootProject.file('vendordeps'))
+    wpi.vendor.validateDependencies()
+}
+
+// AdvantageKit's @AutoLog processor (akit-autolog) is not part of the vendordep
+// JSON's javaDependencies, so wire it up for every module whose sources use
+// @AutoLog, keeping the version in sync with vendordeps/AdvantageKit.json.
+def akitJsonFile = rootProject.file('vendordeps/AdvantageKit.json')
+if (akitJsonFile.exists()) {
+    def akitVersion = new groovy.json.JsonSlurper().parseText(akitJsonFile.text).version
+    dependencies.add('annotationProcessor', "org.littletonrobotics.akit:akit-autolog:${akitVersion}")
+}
+
 // Keep string concat inlining consistent with the original robot project.
 tasks.withType(JavaCompile).configureEach {
     options.compilerArgs.add('-XDstringConcat=inline')

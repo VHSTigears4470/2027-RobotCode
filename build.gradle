@@ -93,6 +93,10 @@ deployArtifact.configureApplication(application)
 wpi.java.configureApplication(application)
 wpi.java.configureTestTasks(test)
 
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
 jar {
     from('src') { into 'backup/src' }
     from('vendordeps') { into 'backup/vendordeps' }
